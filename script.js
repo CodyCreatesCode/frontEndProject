@@ -1,5 +1,8 @@
-const wildfireBtn = document.getElementById("wildfireBtn");
-const volcanoesBtn = document.getElementById("volcanoesBtn");
+const todayBtn = document.getElementById("todayBtn");
+const yesterdayBtn = document.getElementById("yesterdayBtn");
+const monthBtn = document.getElementById("monthBtn");
+const yearBtn = document.getElementById("yearBtn");
+const everyYearBtn = document.getElementById("everyYearBtn");
 let map;
 let markers = [];
 
@@ -8,14 +11,23 @@ fetch("https://eonet.gsfc.nasa.gov/api/v3/events")
     return response.json(); // << need to return
   })
   .then((data) => {
+    console.log(data);
     const allEvents = data.events;
     console.log(allEvents);
+    const date = new Date();
+    let currentDay = ("0" + date.getDate()).slice(-2);
+    let currentMonth = ("0" + (date.getMonth() + 0)).slice(-2);
+    let currentYear = date.getFullYear();
+  
+    const fullDate = `${currentYear}-${currentMonth}-${currentDay}`;
+    const fullMonth = `${currentYear}-${currentMonth}`;
 
-    wildfireBtn.addEventListener("click", (e) => {
+
+    todayBtn.addEventListener("click", (e) => {
       deleteMarkers()
       allEvents.forEach((events) => {
         // loops through each event that has an id of "wildfires"
-        if (events.categories[0].id == "wildfires") {
+        if (events.categories[0].id == "wildfires" && events.geometry[0].date.includes(fullDate)) {
           const lat = events.geometry[0].coordinates[1];
           const long = events.geometry[0].coordinates[0];
 
@@ -24,11 +36,37 @@ fetch("https://eonet.gsfc.nasa.gov/api/v3/events")
       });
     });
 
-    volcanoesBtn.addEventListener("click", (e) => {
+    yearBtn.addEventListener("click", (e) => {
       deleteMarkers()
       allEvents.forEach((events) => {
         // loops through each event that has an id of "wildfires"
-        if (events.categories[0].id == "volcanoes") {
+        if (events.categories[0].id == "wildfires" && events.geometry[0].date.includes(currentYear)) {
+          const lat = events.geometry[0].coordinates[1];
+          const long = events.geometry[0].coordinates[0];
+
+          markMap(lat, long);
+        }
+      });
+    });
+
+    monthBtn.addEventListener("click", (e) => {
+      deleteMarkers()
+      allEvents.forEach((events) => {
+        // loops through each event that has an id of "wildfires"
+        if (events.categories[0].id == "wildfires" &&  events.geometry[0].date.includes(fullMonth) ) {
+          const lat = events.geometry[0].coordinates[1];
+          const long = events.geometry[0].coordinates[0];
+
+          markMap(lat, long);
+        }
+      });
+    });
+
+    everyYearBtn.addEventListener("click", (e) => {
+      deleteMarkers()
+      allEvents.forEach((events) => {
+        // loops through each event that has an id of "wildfires"
+        if (events.categories[0].id == "wildfires") {
           const lat = events.geometry[0].coordinates[1];
           const long = events.geometry[0].coordinates[0];
 
@@ -53,6 +91,11 @@ async function markMap(latitude, longitude) {
     position: position,
     content: wildfireImg,
     title: "Wildfire",
+  });
+  const contentString = {}
+  const infowindow = new google.maps.InfoWindow({
+    content: contentString,
+    ariaLabel: "Label!",
   });
   markers.push(wildfireMarker)
 }
