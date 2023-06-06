@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    overflow: hidden;
+  }
+  #globeContainer {
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .wildfire-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 10px;
+    border: 1px solid black;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+  #zoomButtons {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1;
+  }
+  
+  #zoomButtons button {
+    display: block;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    line-height: 1;
+    margin-top: 5px;
+  }
+  
+  #buttonsContainer {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1;
+  }
+  
+  button {
+    margin-bottom: 10px;
+  }
+  
+  #infoBox {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
