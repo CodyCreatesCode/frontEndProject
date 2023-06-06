@@ -21,8 +21,8 @@ fetch(`https://api.github.com/users/${ashleighsUsername}`)
             style="width: 180px; border-radius: 10px;">
         </div>
         <div class="flex-grow-1 ms-3">
-          <h5 class="mb-1">Danny McLoan</h5>
-          <p class="mb-2 pb-1" style="color: #2b2a2a;">Senior Journalist</p>
+          <h5 class="mb-1">${data.login}</h5>
+          <p class="mb-2 pb-1" style="color: #2b2a2a;">${data.bio}</p>
           <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
             style="background-color: #efefef;">
             <div>
@@ -72,8 +72,8 @@ fetch(`https://api.github.com/users/${codysUsername}`)
             style="width: 180px; border-radius: 10px;">
         </div>
         <div class="flex-grow-1 ms-3">
-          <h5 class="mb-1">Danny McLoan</h5>
-          <p class="mb-2 pb-1" style="color: #2b2a2a;">Senior Journalist</p>
+          <h5 class="mb-1">${data.login}</h5>
+          <p class="mb-2 pb-1" style="color: #2b2a2a;">${data.bio}</p>
           <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
             style="background-color: #efefef;">
             <div>
