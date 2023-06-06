@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/styles.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.7.0/dist/css/bootstrap.min.css"
+    />
     <title>TrackerScape</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="globeContainer"></div>
     <div id="zoomButtons">
-        <button id="zoomInButton">+</button>
-        <button id="zoomOutButton">-</button>
-      </div>
+      <button id="zoomInButton">+</button>
+      <button id="zoomOutButton">-</button>
+    </div>
 
-      <div id="markerButtons">
-        <button id="currentDateButton">Current Date</button>
-        <button id="currentMonthButton">Current Month</button>
-        <button id="currentYearButton">Current Year</button>
-        <button id="allWildfiresButton">All Wildfires</button>
-      </div>
+  <!-- Fancy light/dark mode toggle switch -->
+  <div id="modeToggle">
+    <input type="checkbox" id="modeCheckbox" class="toggle-switch">
+    <label for="modeCheckbox" class="toggle-switch-label">
+      <span class="toggle-switch-inner"></span>
+      <span class="toggle-switch-switch"></span>
+    </label>
+  </div>
 
-      <div id="infoBox">
-        <button><a href="about.html">CONTRIBUTORS</a></button>
-      </div>
-      
+    <div id="markerButtons">
+      <button id="currentDateButton">Current Date</button>
+      <button id="currentMonthButton">Current Month</button>
+      <button id="currentYearButton">Current Year</button>
+      <button id="allWildfiresButton">All Wildfires</button>
+    </div>
 
+    <div id="infoBox">
+      <button><a href="about.html">CONTRIBUTORS</a></button>
+    </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <!-- Include the d3 library -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="./js/script.js"></script>
-  <script src="./js/about.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/about.js"></script>
   </body>
 </html>

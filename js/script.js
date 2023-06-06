@@ -1,19 +1,18 @@
 // Get references to the zoom buttons
 const zoomInButton = document.getElementById("zoomInButton");
 const zoomOutButton = document.getElementById("zoomOutButton");
-const currentDateButton = document.getElementById("currentDateButton");;
-
+const currentDateButton = document.getElementById("currentDateButton");
 const currentMonthButton = document.getElementById("currentMonthButton");
-
 const currentYearButton = document.getElementById("currentYearButton");
-
 const allWildfiresButton = document.getElementById("allWildfiresButton");
+
+let modeCheckbox = document.getElementById("modeCheckbox");
+let texturePath = "images/3dTextureEarth.jpeg"; // Default texture path
 
 const wildfireMarkers = [];
 
-
 // Initialize Three.js variables
-let scene, camera, renderer, globeMesh, wildfireGroup;
+let scene, camera, renderer, globeMesh, cloudMesh, wildfireGroup;
 let isDragging = false;
 let previousMousePosition = { x: 0, y: 0 };
 
@@ -63,18 +62,28 @@ function init() {
 
   // Create a globe mesh
   const geometry = new THREE.SphereBufferGeometry(2, 128, 128);
-  const texture = new THREE.TextureLoader().load(
-    "../images/3dearthTexture.jpeg"
-  ); // Replace with the actual path to the globe texture image
-
+  const texture = new THREE.TextureLoader().load(texturePath); // Replace with the actual path to the globe texture image
   const material = new THREE.MeshBasicMaterial({ map: texture });
   globeMesh = new THREE.Mesh(geometry, material);
   parent.add(globeMesh); // Add the globe to the parent object
 
+  // Create a cloud mesh
+  const cloudGeometry = new THREE.SphereBufferGeometry(2.07, 128, 128);
+  const cloudTexture = new THREE.TextureLoader().load(
+    "images/3dcloudsTexture.jpeg"
+  );
+  const cloudMaterial = new THREE.MeshBasicMaterial({
+    map: cloudTexture,
+    transparent: true,
+    opacity: 0.4,
+  });
+  cloudMesh = new THREE.Mesh(cloudGeometry, cloudMaterial);
+  parent.add(cloudMesh);
+
   // Set the initial rotation of the globe
-globeMesh.rotation.x = Math.PI / 4.5; // Rotate around the x-axis
-globeMesh.rotation.y = Math.PI / 12; // Rotate around the y-axis
-globeMesh.rotation.z = Math.PI / 18; // Rotate around the z-axis
+  globeMesh.rotation.x = Math.PI / 4.5; // Rotate around the x-axis
+  globeMesh.rotation.y = Math.PI / 12; // Rotate around the y-axis
+  globeMesh.rotation.z = Math.PI / 18; // Rotate around the z-axis
 
   // Create a group for wildfires
   wildfireGroup = new THREE.Group();
@@ -113,37 +122,35 @@ globeMesh.rotation.z = Math.PI / 18; // Rotate around the z-axis
         marker.position.set(x, y, z);
 
         // Add the marker to the wildfire group for current year
-        currentYearButton.addEventListener("click", (e) => {
+        currentDateButton.addEventListener("click", (e) => {
           wildfireGroup.remove(marker);
-          if(event.geometry[0].date.includes("2023"))
-          wildfireGroup.add(marker);
+          if (event.geometry[0].date.includes("2023"))
+            wildfireGroup.add(marker);
           wildfireMarkers.push(marker);
-        })
+        });
+
+        // Add the marker to the wildfire group
+        currentMonthButton.addEventListener("click", (e) => {
+          wildfireGroup.remove(marker);
+          if (event.geometry[0].date.includes("2023"))
+            wildfireGroup.add(marker);
+          wildfireMarkers.push(marker);
+        });
 
         // Add the marker to the wildfire group
         currentYearButton.addEventListener("click", (e) => {
           wildfireGroup.remove(marker);
-          if(event.geometry[0].date.includes("2023"))
-          wildfireGroup.add(marker);
+          if (event.geometry[0].date.includes("2023"))
+            wildfireGroup.add(marker);
           wildfireMarkers.push(marker);
-        })
-
-        // Add the marker to the wildfire group
-        currentYearButton.addEventListener("click", (e) => {
-          wildfireGroup.remove(marker);
-          if(event.geometry[0].date.includes("2023"))
-          wildfireGroup.add(marker);
-          wildfireMarkers.push(marker);
-        })
+        });
 
         // Add the marker to the wildfire group for all wildfires
         allWildfiresButton.addEventListener("click", (e) => {
           wildfireGroup.remove(marker);
-          if(event)
-          wildfireMarkers.push(marker);
+          if (event) wildfireMarkers.push(marker);
           wildfireGroup.add(marker);
-        })
-
+        });
       });
     })
     .catch((error) => {
@@ -167,6 +174,9 @@ globeMesh.rotation.z = Math.PI / 18; // Rotate around the z-axis
 
 function animate() {
   requestAnimationFrame(animate);
+
+  // Rotate the cloud mesh along with the globe
+  cloudMesh.rotation.copy(globeMesh.rotation);
 
   // Render the scene with the camera
   renderer.render(scene, camera);
@@ -281,3 +291,24 @@ function zoomIn() {
 function zoomOut() {
   camera.position.z += 0.1; // Adjust the zoom level as desired
 }
+
+// Function to toggle light/dark mode
+function toggleMode() {
+  if (modeCheckbox.checked) {
+    document.body.classList.add("bg-dark");
+    document.body.classList.remove("bg-light");
+    texturePath = "images/3dearthTextureDark.jpeg"; // Path to dark mode texture
+  } else {
+    document.body.classList.add("bg-light");
+    document.body.classList.remove("bg-dark");
+    texturePath = "images/3dearthTexture.jpeg"; // Path to light mode texture
+  }
+
+  // Update the globe texture
+  const newTexture = new THREE.TextureLoader().load(texturePath);
+  globeMesh.material.map = newTexture;
+  globeMesh.material.needsUpdate = true;
+}
+
+// Event listener for mode toggle checkbox
+modeCheckbox.addEventListener("change", toggleMode);
