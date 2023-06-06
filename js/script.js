@@ -9,6 +9,8 @@ const currentYearButton = document.getElementById("currentYearButton");
 
 const allWildfiresButton = document.getElementById("allWildfiresButton");
 
+const wildfireMarkers = [];
+
 
 // Initialize Three.js variables
 let scene, camera, renderer, globeMesh, wildfireGroup;
@@ -112,28 +114,36 @@ globeMesh.rotation.z = Math.PI / 18; // Rotate around the z-axis
 
         // Add the marker to the wildfire group for current year
         currentYearButton.addEventListener("click", (e) => {
+          wildfireGroup.remove(marker);
           if(event.geometry[0].date.includes("2023"))
           wildfireGroup.add(marker);
+          wildfireMarkers.push(marker);
         })
 
         // Add the marker to the wildfire group
         currentYearButton.addEventListener("click", (e) => {
+          wildfireGroup.remove(marker);
           if(event.geometry[0].date.includes("2023"))
           wildfireGroup.add(marker);
+          wildfireMarkers.push(marker);
         })
 
         // Add the marker to the wildfire group
         currentYearButton.addEventListener("click", (e) => {
+          wildfireGroup.remove(marker);
           if(event.geometry[0].date.includes("2023"))
           wildfireGroup.add(marker);
+          wildfireMarkers.push(marker);
         })
 
         // Add the marker to the wildfire group for all wildfires
         allWildfiresButton.addEventListener("click", (e) => {
+          wildfireGroup.remove(marker);
           if(event)
+          wildfireMarkers.push(marker);
           wildfireGroup.add(marker);
         })
-        
+
       });
     })
     .catch((error) => {
